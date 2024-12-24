@@ -18,7 +18,7 @@ class VCBridge(EventDispatcher):
         super().__init__(**kwargs)
         self._initialized = True
 
+
 if __name__ == "__main__":
     print(id(VCBridge()))
     print(id(VCBridge()))
-

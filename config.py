@@ -11,5 +11,5 @@ BASE_URL = "http://192.168.1.103:6123"
 
 ## Server-Side Routes
 ROUTES = {
-    
+    "user_login": "/api/login"
 }

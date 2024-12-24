@@ -3,9 +3,9 @@
 from kivy.lang import Builder
 from kivy.metrics import dp
 from kivy.uix.screenmanager import Screen
-
 from views.other import LogInForm  
 from views.widgets import CToggleButton
+from controls.users import user_login
 
 
 STUDENT_FORM_SCREEN = "student_form_screen"
@@ -52,9 +52,10 @@ LOGIN_KV = f"""
                     id: student_form
                     title: "Öğrenci Giriş Formu"
                     username_hint_text: "Öğrenci Numarası"
+                    username_input_filter: "int"
                     password_hint_text: "Parola"
                     submit_button_text: "[b]Giriş Yap[/b]"
-                    on_submit: root.student_form_submit(self)
+                    on_submit: root.form_submit(self, "student")
             Screen:
                 name: "{LECTURER_FORM_SCREEN}"
 
@@ -64,7 +65,7 @@ LOGIN_KV = f"""
                     username_hint_text: "Kullanıcı Adı"
                     password_hint_text: "Parola"
                     submit_button_text: "[b]Giriş Yap[/b]"
-                    on_submit: root.lecturer_form_submit(self)
+                    on_submit: root.form_submit(self, "lecturer")
 """
 
 class LogInScreen(Screen):
@@ -104,10 +105,13 @@ class LogInScreen(Screen):
     
 
     ## Events
-    def student_form_submit(self, a):
-        print(a)
-        print("Öğrenci Formu Gönderildi")
+    def form_submit(self, instance, usertype):
+        if usertype == "student":
+            form = self.student_form
+        elif usertype == "lecturer":
+            form = self.lecturer_form
 
-    def lecturer_form_submit(self, a):
-        print(a)
-        print("Öğretim Görevlisi Formu Gönderildi")
+        username = form.username_input.text
+        password = form.password_input.text
+
+        user_login(username, password, usertype)

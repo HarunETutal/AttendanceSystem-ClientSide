@@ -44,7 +44,6 @@ LOGINFORM_KV = """
     FormInput:
         id: username_input
         hint_text: root.username_hint_text
-        input_filter: "int"
 
     FormInput:
         id: password_input
